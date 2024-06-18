@@ -1,0 +1,7 @@
+bin span=60s _time
+| stats count by _time
+```| eventstats sum(count) as total```
+| eval threshold=$var_threshold$
+| eval fired=if(count>threshold,"t","f")
+| stats count by fired, total, threshold
+| where (fired="t" AND count >= 3)
