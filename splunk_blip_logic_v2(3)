@@ -1,3 +1,4 @@
+``` var_threshold, var_bins, var_span is the order of the 3 inputs. for alerts than can run on any cron schedule, threshold for your alert threshold (number), bins for how many times over the threshold (in bins) it needs to fire, and make the span for the size of each bin ```
 bin span=$var_span$ _time
 | stats count by _time
 ```| eventstats sum(count) as total```
