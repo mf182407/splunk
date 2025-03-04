@@ -1,0 +1,8 @@
+``` for alerts that run every 5m, make 5 bins (1 every 60s), and if the count is > threshold for 3 of the 5 bins, fire. else, do not fire (blip) ```
+bin span=60s _time
+| stats count by _time
+```| eventstats sum(count) as total```
+| eval threshold=$var_threshold$
+| eval fired=if(count>threshold,"t","f")
+| stats count by fired, total, threshold
+| where (fired="t" AND count >= 3)
